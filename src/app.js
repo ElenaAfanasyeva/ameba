@@ -25,28 +25,26 @@ const createPaper = (width, height, offsetX=0, offsetY=0) =>
 
     });
 
-const createGradients = gradients => svg =>
-    Object.assign({}, svg, {
-        gradients: Object.keys(gradients)
-                         .reduce((acc, gradient) => {
-                             acc[gradient] = svg.paper.gradient(gradients[gradient]);
-                             return acc;
-                         },{})
-    });
-
+const createGradient = gradients => svg =>
+	Object.assign({}, svg, {
+		gradient: svg.paper.gradient('l(0,0,1,1)#fff-#fff'),
+		gradients 
+	})
 
 const createPath = svg =>
     Object.assign({}, svg, { path: svg.paper.path()})
 
-const animate = (path, delay=3000) => (d, fill) =>
+const animate = (path, delay=3000, gradient) => (d, fill) =>
     new Promise((res, rej) => {
-        path.attr({fill});
+	[...gradient.node.querySelectorAll('stop')].forEach((stop, index) => {
+		stop.setAttribute('stop-color', fill[index])
+	})
         path.animate({d}, delay, mina.easeinout, () => res(d));
     })
 
 const createSvgStream = ({ size: {width, height}, gradients, container}) =>
     createPaper(width, height)
-        .map(createGradients(gradients))
+	.map(createGradient(gradients))
         .map(createPath)
         .tap(({paper}) => paper.appendTo(document.querySelector(container)))
 
@@ -75,21 +73,21 @@ const createAmoebaStream = (amoebas_config, $event) =>
 
 const $amoeba = createAmoebaStream(amoebas_config, $scroll_monitor)
 
-const createAnimationStream = ($svg, $amoeba) => combine(({path, gradients}, amoeba) => ({path, gradients, amoeba}), $svg, $amoeba)
+const createAnimationStream = ($svg, $amoeba) => combine(({path, gradient, gradients}, amoeba) => ({path, gradient, gradients, amoeba}), $svg, $amoeba)
 
 const $animation = createAnimationStream($svg, $amoeba);
 
 const createAnimationLoop = $animation =>
     $animation
-        .tap(({amoeba, path, gradients}) => {
+        .tap(({amoeba, path, gradient, gradients}) => {
             if(!path.attr('d')){
                 path.attr({
                     d: amoeba.paths[0],
-                    fill: gradients[amoeba.fill]
+		    fill: gradient
                 })
             }
         })
-        .map(({amoeba, path, gradients}) =>
+        .map(({amoeba, path, gradient, gradients}) =>
             generate(function*(paths, animatePath, fill){
                 var len = paths.length;
                 let index = 0;
@@ -97,7 +95,7 @@ const createAnimationLoop = $animation =>
                     yield animatePath(paths[index % len], fill);
                     index++;
                 }
-            }, amoeba.paths, animate(path, 2000), gradients[amoeba.fill])
+            }, amoeba.paths, animate(path, 2000, gradient), gradients[amoeba.fill])
         )
         .switchLatest()
 

@@ -29,6 +29,10 @@
 				transform: translate(-10%, -10$);
 			}
 
+			stop {
+				transition: .5s ease;
+			}
+
 			@media screen and (orientation: portrait) {
 				svg {
 					height: 110%;
@@ -40,10 +44,10 @@
 	</head>
 	<body>
 		<div class="amebas_div"></div>
-		<div class="amoeba" data-ameba-id='what-we-love-to-do'></div>
-		<div class="amoeba" data-ameba-id='stuff-we-did'></div>
-		<div class="amoeba" data-ameba-id='our-friends'></div>
-		<div class="amoeba" data-ameba-id='what-about-us'></div>
+		<div class="amoeba" data-amoeba-id='what-we-love-to-do'></div>
+		<div class="amoeba" data-amoeba-id='stuff-we-did'></div>
+		<div class="amoeba" data-amoeba-id='our-friends'></div>
+		<div class="amoeba" data-amoeba-id='what-about-us'></div>
 	<script>
 window.svg_config = {
     size: {
@@ -54,15 +58,10 @@ window.svg_config = {
     },
     container: '.amebas_div',
     gradients: {
-        /*
-            [gradient-id] : [gradient-descriptor]
-            for more about descriptor:
-            http://snapsvg.io/docs/#Paper.gradient
-        */
-        "ava": "l(0, 0, 1, 1)#00d648-aqua",
-        "marsy": "l(0, 0, 1, 1)#002aff-#1bffff",
-        "coxa": "l(0, 0, 1, 1)#ed1c24-#fcee21",
-        "rod": "l(0, 0, 1, 1)#7b00ac-#4900ff"
+	"ava": ["#00d648", "aqua"],
+	"marsy": ["#002aff","#1bffff"],
+	"coxa": ["#ed1c24", "#fcee21"],
+	"rod": ["#7b00ac","#4900ff"]
     }
 };
 
