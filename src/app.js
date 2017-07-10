@@ -60,7 +60,7 @@ const createScrollMonitorStream = ({parent, children}) =>
                 containerMonitor
                     .create(element, -350)
                     .fullyEnterViewport(() => {
-                        if(element.dataset.amebaId) add(element.dataset.amebaId)
+                        if(element.dataset.amoebaId) add(element.dataset.amoebaId)
                     })
             })
     })
