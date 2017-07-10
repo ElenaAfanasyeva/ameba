@@ -17,13 +17,12 @@ module.exports = {
 			exclude: [/node_modules/],
 			use: [{
 				loader: 'babel-loader',
-				options: { presets: ['es2015'] }
+				options: { presets: ['es2015'], plugins: ['transform-runtime'] },
 			}]
-		}],
-		loaders: [{
+		},{
 			test: require.resolve('snapsvg'),
-			loader: 'imports-loader?this=window,fix=>module.exports=0!snapsvg/dist/snap.svg.js'
-		}]	
+			use: 'imports-loader?this=>window,fix=>module.exports=0'
+		}]
 	},
 	devServer: {
 		contentBase: resolve(__dirname, './example')
