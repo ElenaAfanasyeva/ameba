@@ -19,6 +19,10 @@ module.exports = {
 				loader: 'babel-loader',
 				options: { presets: ['es2015'] }
 			}]
+		}],
+		loaders: [{
+			test: require.resolve('snapsvg'),
+			loader: 'imports-loader?this=window,fix=>module.exports=0!snapsvg/dist/snap.svg.js'
 		}]	
 	},
 	devServer: {
