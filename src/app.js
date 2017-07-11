@@ -19,8 +19,8 @@ const createPaper = (width, height, offsetX=0, offsetY=0) =>
 	paper: Snap(width, height)
 		  .attr({
 			preserveAspectRatio: 'xMidYMid slice',
-			viewBox: createViewBoxDimensions(offsetX, offsetY , getPathMax(pluck('paths', amoebas_config)))
-		
+			//viewBox: createViewBoxDimensions(offsetX, offsetY , getPathMax(pluck('paths', amoebas_config)))
+			viewBox: '0 0 1920 1080' 
 		  })	
 
     });
