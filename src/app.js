@@ -56,7 +56,7 @@ const createScrollMonitorStream = ({parent, children}) =>
         [...document.querySelectorAll(children)]
             .forEach(element => {
                 containerMonitor
-                    .create(element, -350)
+                    .create(element, { bottom: - (window.innerHeight - (window.innerHeight * 0.3)), top: -(window.innerHeight * 0.3) })
                     .fullyEnterViewport(() => {
                         if(element.dataset.amoebaId) add(element.dataset.amoebaId)
                     })
