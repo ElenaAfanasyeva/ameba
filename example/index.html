@@ -7,8 +7,6 @@
 			body {
 				margin: 0;
 				padding: 0;
-				overflow-y: scroll;
-				overflow-x: hidden;
 			}
 
 			.amebas_div {
@@ -20,8 +18,10 @@
 			}
 
 			.amoeba {
-				width: 100vw;
-				height: 100vh;
+				box-sizing: border-box;
+				padding: 300px 0 200px;
+				width: calc(100vw -(100vw - 100%));
+				height: 200vh;
 			}
 			svg {
 				width: 100%;
